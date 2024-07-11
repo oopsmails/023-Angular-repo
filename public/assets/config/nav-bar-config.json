@@ -1,0 +1,65 @@
+[
+  {
+    "linkText": "Home",
+    "parentLink": "",
+    "menu": false,
+    "submenu": []
+  },
+  {
+    "linkText": "User Search",
+    "parentLink": "/usersearch",
+    "menu": false,
+    "submenu": []
+  },
+  {
+    "linkText": "POSTs",
+    "parentLink": "/posts",
+    "menu": false,
+    "submenu": []
+  },
+  {
+    "linkText": "Page Click",
+    "parentLink": "/pageclick",
+    "menu": false,
+    "submenu": []
+  },
+  {
+    "linkText": "Goto",
+    "parentLink": "",
+    "menu": false,
+    "submenu": [
+      {
+        "childtext": "NGB",
+        "link": "/ngb"
+      },
+      {
+        "childtext": "NGX",
+        "link": "/ngx"
+      },
+      {
+        "childtext": "NGXB",
+        "link": "/ngxb"
+      },
+      {
+        "childtext": "Html & CSS",
+        "link": "goto/htmlcss"
+      },
+      {
+        "childtext": "Go To 1: Test CSS",
+        "link": "goto/1"
+      },
+      {
+        "childtext": "Go To 2: Test CSS",
+        "link": "goto/2"
+      },
+      {
+        "childtext": "Go To 3: Test TypeScript",
+        "link": "goto/3"
+      },
+      {
+        "childtext": "NOT Exist",
+        "link": "goto/not-exist"
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+<div class="header-div">
+  <a routerLink="" class="logo">LOGO</a>
+
+  <input type="checkbox" id="menu-bar" #menubar />
+  <!-- <label for="menu-bar">Menu</label> -->
+  <label for="menu-bar" class="nav-toggle-label">
+    <!-- <span>X</span> -->
+    <span></span>
+  </label>
+
+  <nav class="navbar" #navbar>
+    <ul>
+      @for(item of navBarConfig$ | async; let itemIndex = $index; track itemIndex) {
+      <!-- <li *ngFor="let item of navBarConfig$ | async; let i = index"> -->
+      <li>
+        @if(!item.submenu.length) {
+        <!-- <a *ngIf="!item.submenu.length" routerLink="{{ item.parentLink }}">{{ item.linkText }}</a> -->
+        <a routerLink="{{ item.parentLink }}">{{ item.linkText }}</a>
+        } @else {
+        <!-- <a *ngIf="item.submenu.length"> -->
+        <a>
+          {{ item.linkText }}
+          <span class="nav-bar-arrow-down"><i class="arrow down"></i></span>
+        </a>
+        <ul>
+          <!-- <li *ngFor="let subItem of item.submenu"> -->
+          @for(subItem of item.submenu; track $index) {
+          <li>
+            <a routerLink="{{ subItem.link }}">{{ subItem.childtext }}</a>
+          </li>
+          }
+        </ul>
+        }
+      </li>
+      }
+    </ul>
+  </nav>
+</div>
