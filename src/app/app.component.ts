@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
+import { FooterComponent } from './components/footer/footer.component';
 import { NavBar1Component } from './components/navbar1/navbar1.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavBar1Component],
+  imports: [RouterOutlet, NavBar1Component, FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
