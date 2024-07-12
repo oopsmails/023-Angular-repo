@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "021-angular-simple-v18": {
+    "023-Angular-repo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/021-angular-simple-v18",
+            "outputPath": "dist/023-Angular-repo",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "021-angular-simple-v18:build:production"
+              "buildTarget": "023-Angular-repo:build:production"
             },
             "development": {
-              "buildTarget": "021-angular-simple-v18:build:development"
+              "buildTarget": "023-Angular-repo:build:development"
             }
           },
           "defaultConfiguration": "development"
