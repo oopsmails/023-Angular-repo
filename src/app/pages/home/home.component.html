@@ -22,3 +22,16 @@
 
 
 <h1>Home Page</h1>
+
+
+<h2>Topic Pages</h2>
+
+<hr>
+
+<h3><a routerLink="/topic/input01">/topic/input01: User Searching</a></h3>
+
+<section class="user-list__header">
+    <button class="user-list__button" (click)="addUser()">Add Andy</button>
+    <img width="30" src="/assets/favicon.ico" />
+</section>
+<app-user-list [users]="users" />

@@ -1,28 +1,36 @@
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Subject, fromEvent, map, merge, scan } from 'rxjs';
-import { UserSearchComponent } from '../user-search/user-search.component';
+import { User } from '../../shared/models/user';
+import { UserListComponent } from '../signal/user-list/user-list.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, UserSearchComponent, AsyncPipe, NgStyle],
+  imports: [RouterModule, UserListComponent, AsyncPipe, NgStyle],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  protected reset$ = new Subject<void>();
+  users: User[] = [
+    { id: "1", name: 'Michael', lastName: 'Scott', username: 'michael.scott' },
+    { id: "2", name: 'Dwight', lastName: 'Schrute', username: 'dwight.schrute' },
+    { id: "3", name: 'Angela', lastName: 'Martin', username: 'angela.martin' },
+    { id: "4", name: 'Jim', lastName: 'Halpert', username: 'jim.halpert' },
+  ];
 
-  clicks$ = merge(
-    fromEvent<PointerEvent>(document, 'click').pipe(map(accumulationHandler)),
-    this.reset$.pipe(map(resetHandler))
-  ).pipe(
-    scan((state: PointerEvent[], stateHandlerFn) => stateHandlerFn(state), [])
-  );
+  addUser() {
+    this.users = [
+      {
+        id: "5",
+        name: 'Andy',
+        lastName: 'Bernard',
+        username: 'andy.bernard',
+      },
+      ...this.users,
+    ];
+    console.log('Current Users', this.users);
+  }
 
 }
 
-const accumulationHandler = (event: PointerEvent) => (state: PointerEvent[]) =>
-  [...state, event];
-const resetHandler = (event: void) => (state: PointerEvent[]) => [];

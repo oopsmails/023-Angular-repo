@@ -1,0 +1,8 @@
+<input class="user-list__input" (input)="updateQuery($event)" placeholder="Start typing..." />
+<ul class="user-list__ul">
+    @for (user of filteredUsers(); track user.id) {
+    <li>{{ user.displayName }}</li>
+    }
+</ul>
+
+<p>Ref: https://www.youtube.com/watch?v=U8YXaWwyd9k</p>
