@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import localeFr from '@angular/common/locales/fr';
 import { AppRoutingModule } from './app.routes';
 import { HomeModule } from './pages/home/home.module';
+import { HomeRoutingModule } from './pages/home/home.routes';
 // registerLocaleData(localeDe);
 registerLocaleData(localeFr);
 // registerLocaleData(localeEn);
@@ -19,6 +20,7 @@ registerLocaleData(localeFr);
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HomeModule,
+    HomeRoutingModule,
     AppRoutingModule, // need to be at last, otherwise NotFoundComponent is at front
   ],
   declarations: [],

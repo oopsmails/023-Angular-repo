@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { UserListParentComponent } from '../signal/user-list/user-list-parent.component';
 import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home.routes';
 
-const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+const routes: Routes = [{
+  path: '',
+  component: HomeComponent,
+  children: [
+    { path: 'user-list', component: UserListParentComponent },
+  ],
+},
 ];
 
 @NgModule({
@@ -16,10 +20,10 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    BrowserModule,
+    // BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HomeRoutingModule,
+    // HomeRoutingModule,
     RouterModule.forChild(routes),
   ],
   exports: [],
