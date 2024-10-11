@@ -11,3 +11,23 @@
     {{ post.title }} <span (click)="store.removePost(post.id)">X</span>
   </div>
 </div>
+
+<h2>Topic Pages</h2>
+
+<hr>
+
+<h3>Signal</h3>
+
+<p><a routerLink="/posts/userlist">Signal: /posts/user-list User Searching</a></p>
+
+<hr>
+
+<br>
+<br>
+
+<h3>Temp Codes for Testing: To Be Deleted</h3>
+<section class="user-list__header">
+  <button class="user-list__button" (click)="addUser()">Add Andy</button>
+  <img width="30" src="/assets/favicon.ico" />
+</section>
+<app-user-list [users]="users" />

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import {
   patchState,
   signalStore,
@@ -11,6 +12,8 @@ import {
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
+import { User } from '../../shared/models/user';
+import { UserListComponent } from '../signal/user-list/user-list.component';
 import { PostsService } from './services/posts.service';
 import { PostInterface } from './types/post.interface';
 
@@ -69,7 +72,7 @@ export const PostsStore = signalStore(
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, UserListComponent],
   providers: [PostsStore],
 })
 export class PostsComponent {
@@ -100,4 +103,25 @@ export class PostsComponent {
   //   const updatedPosts = this.state.posts().filter((post) => post.id !== id);
   //   patchState(this.state, (state) => ({ ...state, posts: updatedPosts }));
   // }
+
+
+  users: User[] = [
+    { id: "1", name: 'Michael', lastName: 'Scott', username: 'michael.scott' },
+    { id: "2", name: 'Dwight', lastName: 'Schrute', username: 'dwight.schrute' },
+    { id: "3", name: 'Angela', lastName: 'Martin', username: 'angela.martin' },
+    { id: "4", name: 'Jim', lastName: 'Halpert', username: 'jim.halpert' },
+  ];
+
+  addUser() {
+    this.users = [
+      {
+        id: "5",
+        name: 'Andy',
+        lastName: 'Bernard',
+        username: 'andy.bernard',
+      },
+      ...this.users,
+    ];
+    console.log('Current Users', this.users);
+  }
 }
