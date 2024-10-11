@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { User } from '../../../shared/models/user';
+import { User } from '../../../../shared/models/user';
 import { UserListComponent } from './user-list.component';
 
 
