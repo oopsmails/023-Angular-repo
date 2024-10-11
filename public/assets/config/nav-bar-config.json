@@ -6,20 +6,14 @@
     "submenu": []
   },
   {
-    "linkText": "User Search",
-    "parentLink": "/usersearch",
+    "linkText": "Home Made",
+    "parentLink": "/hm",
     "menu": false,
     "submenu": []
   },
   {
-    "linkText": "POSTs",
-    "parentLink": "/posts",
-    "menu": false,
-    "submenu": []
-  },
-  {
-    "linkText": "Page Click",
-    "parentLink": "/pageclick",
+    "linkText": "Example",
+    "parentLink": "/eg",
     "menu": false,
     "submenu": []
   },

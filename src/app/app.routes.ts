@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { PageClickComponent } from './pages/page-click/page-click.component';
 import { PostsComponent } from './pages/posts/posts.component';
-import { UserSearchComponent } from './pages/user-search/user-search.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: 'home', pathMatch: 'full' },  // Redirect to 'home' by default
@@ -15,12 +13,14 @@ export const routes: Routes = [
             import('./pages/home/home.module').then(m => m.HomeModule)
     },
     {
-        path: 'usersearch',
-        component: UserSearchComponent,
+        path: 'hm',
+        loadChildren: () =>
+            import('./pages/home-made/home-made.module').then(m => m.HomeMadeModule)
     },
     {
-        path: 'pageclick',
-        component: PageClickComponent,
+        path: 'eg',
+        loadChildren: () =>
+            import('./pages/examples/example.module').then(m => m.ExampleModule)
     },
     {
         path: 'posts',
