@@ -1,7 +1,7 @@
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { User } from '../../../shared/models/user';
+import { User } from '../../../../shared/models/user';
 import { UserListComponent } from './user-list.component';
 
 @Component({

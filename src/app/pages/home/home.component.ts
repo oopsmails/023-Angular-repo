@@ -2,7 +2,7 @@ import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { User } from '../../shared/models/user';
-import { UserListComponent } from '../signal/user-list/user-list.component';
+import { UserListComponent } from './signal/user-list/user-list.component';
 
 @Component({
   selector: 'app-home',

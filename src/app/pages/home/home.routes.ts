@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { UserListParentComponent } from "../signal/user-list/user-list-parent.component";
 import { HomeComponent } from "./home.component";
+import { UserListParentComponent } from "./signal/user-list/user-list-parent.component";
 
 const routes: Routes = [
     {
