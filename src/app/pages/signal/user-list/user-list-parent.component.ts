@@ -5,7 +5,7 @@ import { User } from '../../../shared/models/user';
 import { UserListComponent } from './user-list.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-user-list-parent',
   standalone: true,
   imports: [RouterModule, UserListComponent, AsyncPipe, NgStyle],
   templateUrl: './user-list-parent.component.html',
