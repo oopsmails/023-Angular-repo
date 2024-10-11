@@ -1,38 +1,15 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { PostsComponent } from "../posts/posts.component";
 import { UserListParentComponent } from "../signal/user-list/user-list-parent.component";
-
-// export const routes: Routes = [
-//     { path: '', component: HomeComponent }, // Route to the HomeComponent
-//     { path: 'user-list', component: UserListParentComponent },
-// ];
-
-// const routes: Routes = [{
-//     path: '',
-//     // component: HomeComponent, // testing
-//     component: PostsComponent,
-//     children: [
-//         { path: 'userlist', component: UserListParentComponent },
-//         { path: '**', component: NotFoundComponent },
-//     ],
-// },
-// ];
-
-
+import { HomeComponent } from "./home.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: PostsComponent,
-        // children: [
-        //     { path: 'userlist', component: UserListParentComponent },
-        //     // { path: 'add-product', component: AddProductComponent },
-        //     // { path: '', redirectTo: '/admin/update-user', pathMatch: 'full' },
-        // ],
+        component: HomeComponent,
     },
-    { path: 'userlist', component: UserListParentComponent },
-    { path: '**', component: UserListParentComponent },
+    { path: 'user-list', component: UserListParentComponent },
+    { path: '**', component: HomeComponent }, // for testing, if /home/notfound
 ];
 
 @NgModule({
@@ -40,5 +17,4 @@ const routes: Routes = [
     exports: [RouterModule],
 })
 export class HomeRoutingModule {
-    // static routes = routes;
 }
