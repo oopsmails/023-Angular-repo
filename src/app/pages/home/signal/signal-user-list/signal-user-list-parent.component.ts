@@ -2,16 +2,16 @@ import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { User } from '../../../../shared/models/user';
-import { UserListComponent } from './user-list.component';
+import { SignalUserListComponent } from './signal-user-list.component';
 
 @Component({
-  selector: 'app-user-list-parent',
+  selector: 'app-signal-list-parent',
   standalone: true,
-  imports: [RouterModule, UserListComponent, AsyncPipe, NgStyle],
-  templateUrl: './user-list-parent.component.html',
-  styleUrl: './user-list-parent.component.scss'
+  imports: [RouterModule, SignalUserListComponent, AsyncPipe, NgStyle],
+  templateUrl: './signal-user-list-parent.component.html',
+  styleUrl: './signal-user-list-parent.component.scss'
 })
-export class UserListParentComponent {
+export class SignalUserListParentComponent {
   users: User[] = [
     { id: "1", name: 'Michael', lastName: 'Scott', username: 'michael.scott' },
     { id: "2", name: 'Dwight', lastName: 'Schrute', username: 'dwight.schrute' },

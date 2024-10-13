@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { UserListParentComponent } from "../home/signal/user-list/user-list-parent.component";
+import { SignalUserListParentComponent } from "../home/signal/signal-user-list/signal-user-list-parent.component";
 import { ExampleComponent } from "./example.component";
 import { PageClickComponent } from "./page-click/page-click.component";
 import { PostsComponent } from "./posts/posts.component";
@@ -8,7 +8,7 @@ import { UserSearchComponent } from "./user-search/user-search.component";
 
 const routes: Routes = [
     { path: '', component: ExampleComponent, },
-    { path: 'user-list', component: UserListParentComponent },
+    { path: 'signal-user-list', component: SignalUserListParentComponent },
     {
         path: 'usersearch',
         component: UserSearchComponent,

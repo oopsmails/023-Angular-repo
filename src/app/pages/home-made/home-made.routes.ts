@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { UserListParentComponent } from "../home/signal/user-list/user-list-parent.component";
+import { SignalUserListParentComponent } from "../home/signal/signal-user-list/signal-user-list-parent.component";
 import { HomeMadeComponent } from "./home-made.component";
 
 const routes: Routes = [
     { path: '', component: HomeMadeComponent, },
-    { path: 'user-list', component: UserListParentComponent },
+    { path: 'signal-user-list', component: SignalUserListParentComponent },
     { path: '**', component: HomeMadeComponent }, // for testing, if /home/notfound
 ];
 

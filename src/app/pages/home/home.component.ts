@@ -2,12 +2,12 @@ import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { User } from '../../shared/models/user';
-import { UserListComponent } from './signal/user-list/user-list.component';
+import { SignalUserListComponent } from './signal/signal-user-list/signal-user-list.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, UserListComponent, AsyncPipe, NgStyle],
+  imports: [RouterModule, SignalUserListComponent, AsyncPipe, NgStyle],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

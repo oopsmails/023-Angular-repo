@@ -5,11 +5,13 @@ import { ModifiedUser, User } from '../../../../shared/models/user';
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  templateUrl: './signal-user-list.component.html',
+  styleUrl: './signal-user-list.component.scss'
   ,
 })
-export class UserListComponent {
+export class SignalUserListComponent {
+
+  static LOCAL_STORAGE_NAME_SEARCH_STRING = 'searchString';
 
   userList = input.required({
     alias: 'users',
@@ -24,6 +26,11 @@ export class UserListComponent {
     })
   }
 
+  logger = effect(() => {
+    // can see it is stored in local storage
+    localStorage.setItem(SignalUserListComponent.LOCAL_STORAGE_NAME_SEARCH_STRING, this.query())
+  })
+
   protected filteredUsers = computed(() =>
     this.userList().filter(({ displayName }) =>
       // displayName.startsWith(this.query())
@@ -32,6 +39,7 @@ export class UserListComponent {
   );
 
   private query = signal('');
+  // private query = signal(localStorage.getItem(SignalUserListComponent.LOCAL_STORAGE_NAME_SEARCH_STRING) || '');
 
   updateQuery(e: Event) {
     this.query.set((e.target as HTMLInputElement).value);
