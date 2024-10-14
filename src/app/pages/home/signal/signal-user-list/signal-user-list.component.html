@@ -1,4 +1,4 @@
-<input class="user-list__input" (input)="updateQuery($event)" placeholder="Start typing..." />
+<input class="user-list__input" (input)="updateQuery($event)" [ngModel]="query()" placeholder="Start typing..." />
 <ul class="user-list__ul">
     @for (user of filteredUsers(); track user.id) {
     <li>{{ user.displayName }}</li>

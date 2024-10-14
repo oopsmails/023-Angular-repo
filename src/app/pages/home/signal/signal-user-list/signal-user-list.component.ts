@@ -1,10 +1,12 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ModifiedUser, User } from '../../../../shared/models/user';
 
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
+  imports: [FormsModule],
   templateUrl: './signal-user-list.component.html',
   styleUrl: './signal-user-list.component.scss'
   ,
@@ -38,8 +40,8 @@ export class SignalUserListComponent {
     )
   );
 
-  private query = signal('');
-  // private query = signal(localStorage.getItem(SignalUserListComponent.LOCAL_STORAGE_NAME_SEARCH_STRING) || '');
+  // query = signal('');
+  query = signal(localStorage.getItem(SignalUserListComponent.LOCAL_STORAGE_NAME_SEARCH_STRING) || ''); // if keep query after refresh
 
   updateQuery(e: Event) {
     this.query.set((e.target as HTMLInputElement).value);
