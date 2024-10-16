@@ -1,0 +1,139 @@
+<h1>Fetch Data on Signal Changes Parent Page</h1>
+
+<hr>
+
+<div class="div__section">
+    <h2>Angular Signals: What's the proper way to trigger a fetch when input Signals change value?</h2>
+    So I've been learning and using Signals in Angular, and it's exciting. However, there are some use cases where I
+    feel there's some friction. I can't figure out a good pattern when you have a component with input signals, and you
+    want to trigger a re-fetch of data whenever some input value changes.
+
+    computed is obviously not the way to go since they can't be async. And effect, according to the docs, shouldn't
+    modify component state. So that seems like a no-go as well. And ngOnChanges is being deprecated (long term) in favor
+    of Signals-based components and zoneless.
+
+    Consider the following component:
+
+    <pre>
+    <code>
+    
+        &#64;Component()
+        export class ChartComponent &#123;
+            dataSeriesId = input.required&lt;string&gt;();
+            fromDate = input.required&lt;Date&gt;();
+            toDate = input.required&lt;Date&gt;();
+            private data = signal&lt;ChartData | null&gt;(null);
+        &#125;
+    </code>
+    </pre>
+    Whenever one of the input signals gets a new value, I want to trigger a re-fetch of data, and update the value of
+    the private data signal.
+
+    How would one go about this? What's the best practice? Effect and bypass the rule to modify state?
+
+    <p>Ref: <a
+            href="https://stackoverflow.com/questions/78135603/angular-signals-whats-the-proper-way-to-trigger-a-fetch-when-input-signals-cha">stackoverflow
+            item</a></p>
+
+    <p>Discussion:</p>
+    <div>
+
+        Setting a signal in an effect is not usually a good idea. I made this mistake myself many times when starting
+        off with signals. Using toSignal, toObservable and computed is a much better pattern. See the accepted answer
+        for a good solution. –
+        Dan Hobbs
+        CommentedApr 16 at 13:58 <br><br>
+        To: DanHobbs in case of asynchronous action in effect I cannot see any disadvantage/problem of updating signal
+        value, you can provide at least one example of your "many" of a potential problem. Angular team writes more
+        about ExpressionChangedAfterItHasBeenCheckedError that might be caused by setting signal in effect. But how can
+        it be caused on async action like fetch in this example –
+        Danylo Gudz
+        CommentedApr 16 at 16:17 <br><br>
+        the advice I've read is for effects to be pure functions with no side effects. There is a risk of cyclic
+        dependency if you're not careful. This isn't what happened to me, but I ended up with convoluted code and I have
+        simplified it by using a combination of computed() and RxJS pipes with toSignal and occasionally toObservable
+        and I get correct change detection. A useful comment here: blog.angular-university.io/angular-signals (look in
+        the "How to set signals from inside an effect, if needed" section). –
+        Dan Hobbs
+        CommentedApr 17 at 18:08 <br><br>
+        To: DanHobbs it's possible to get circular dependency etc in effect if you do state change on effect function
+        level, but here it is done as a result of request that is asynchronous and not gonna cause any issues, it just
+        happens in a different timings, not the same as effect function is executed. So there is 0 risk. You can face
+        the issue if you do mutation directly in effect synchronously, here - not. To understand problematic need to get
+        the idea of how and when effect is executed –
+        Danylo Gudz
+        CommentedApr 18 at 8:28 <br><br>
+        It's data integrity that you should be worried about here, not signal loops. Let's say OP's data series with id
+        #1 takes 5 seconds to fetch. After 3 seconds, the user decides to switch to dataSeriesId #2, which triggers a
+        fetch that takes only 1 second to complete (for example, because the series contains less data). Your effect
+        example will show the correct data from series #2 for 1 second, but since the first fetch operation wasn't
+        canceled, it completes 1 second later and now you're showing the wrong data. The dataSeriesId will say #2, but
+        you're showing the data from series #1. –
+        Rens Jaspers
+        CommentedJun 22 at 8:26 <br><br>
+        1
+        <div style="font-weight: 600;">
+            To: RensJaspers makes sense, but you can also cancel subscription to prevent this, on one side switchMap
+            looks
+            cleaner doing it under the hood but it feels like the choice doing toSignal + 3x toObservable + switchMap
+            against effect + unsubscribe and extra variable for subscription –
+            Danylo Gudz
+            CommentedJul 5 at 8:36 <br><br>
+            Yes, that works. In your updated example you say “in case” the asynchronous operations resolve out of order,
+            but
+            you can never be sure they resolve in order. Since order matters for the OP's use case, the example with
+            dataLoadSub?.subscribe is the only valid one. By the way, I updated my example so that you only need
+            toObservable once. –
+        </div>
+        Rens Jaspers
+        CommentedJul 7 at 19:29 <br><br>
+        To: RensJaspers have a question just for myself, your variant looks pretty clean, like it, and how do you see a
+        convenient way of handling updates/deletions of items in such readonly signal data. If we have a new task to add
+        remove button we do delete request and need to remove the item from an array. As for now I'm too suspicious
+        about readonly nature of signal cutting out some freedom of updating the data further –
+        Danylo Gudz
+        CommentedJul 9 at 14:49 <br><br>
+        To: DanyloGudz Thanks! There are many ways to implement this, but for this kind of scenario, I recommend using
+        TanStack Query for Angular. Keeping server-client state in sync is complex, and this library offers a simple
+        signal-based API to manage it efficiently. It lets you do optimistic updates and handles everything we've
+        discussed, like reactive data loading based on changing input parameters and preventing data mix-ups. Plus, it
+        has many other useful features. It's still experimental, but worth using. –
+        Rens Jaspers
+        CommentedJul 10 at 18:59 <br>
+
+    </div>
+</div>
+
+
+<div class="div__section">
+    <h3>Using Rxjs SwitchMap</h3>
+
+    <input #idInput [value]="id1()" (input)="id1.set(idInput.value)">
+    <br>
+    <input #fromInput type="date" [value]="from1()" (input)="from1.set(fromInput.value)">
+    <br>
+    <input #toInput type="date" [value]="to1()" (input)="to1.set(toInput.value)">
+    <br>
+    <signal-fetch-rxjs [dataSeriesId]="id1()" [fromDate]="fromDate1()" [toDate]="toDate1()"></signal-fetch-rxjs>
+
+    <p>Ref: <a href="https://stackblitz.com/edit/stackblitz-starters-epzd98?file=src%2Fmain.ts">stackblitz item</a></p>
+</div>
+
+
+<div class="div__section">
+    <h3>Using effect</h3>
+    <p>
+        in case of different time of fetch to fulfil you might end up with wrong data, then also need to cancel old
+        subscription whenever params change.
+
+    </p>
+
+    <button (click)="from2.set(randomizeDate())">randomize from</button>
+    <button (click)="to2.set(randomizeDate())">randomize to</button>
+    <button (click)="id2.set(randomizeId())">randomize id</button>
+
+    <div>from: {{from2() | date : 'dd-MM'}}, to: {{to2() | date : 'dd-MM'}}, id: {{id2()}}</div>
+    <div>result: <signal-fetch-effect [fromDate]="from2()" [toDate]="to2()" [dataSeriesId]="id2()" /></div>
+
+    <p>Ref: <a href="https://stackblitz.com/edit/stackblitz-starters-r6qwly?file=src%2Fmain.ts">stackblitz item</a></p>
+</div>
