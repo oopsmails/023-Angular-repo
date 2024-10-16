@@ -1,11 +1,17 @@
-import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, model, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { User } from '../../../../shared/models/user';
 
+
+export interface QuestionTypeInterface {
+  question: string;
+}
 
 @Component({
   selector: 'app-signal-basic',
   standalone: true,
   templateUrl: './signal-basic.component.html',
+  imports: [FormsModule],
   styleUrl: './signal-basic.component.scss'
   ,
 })
@@ -16,6 +22,32 @@ export class SignalBasicComponent implements OnInit {
     console.log('titleChangeEffect', this.title());
   });
   usersTotal = computed(() => this.users().length);
+
+  quantity1: Signal<number> = model<number>(1);
+  quantity2 = signal<number>(1);
+
+  onQuantitySelected(qty: number) {
+    this.quantity2.set(qty);
+  }
+
+  licenseKey: WritableSignal<string> = signal('');
+  isLicenseValid: WritableSignal<boolean> = signal(false);
+  updatedLicenseKey = signal('');
+  protected readonly viewMode = computed(() => ({
+    licenseKey: this.licenseKey(),
+    isLicenseValid: this.isLicenseValid()
+  }));
+  get vm(): ReturnType<typeof this.viewMode> {
+    return this.viewMode();
+  }
+  onLicenseKeyEntry(event: Event) {
+    const updatedLicenseKey = (event.target as HTMLInputElement).value + ' UPDATED!';
+    this.updatedLicenseKey.set(updatedLicenseKey);
+  }
+
+  myQuestion = signal<QuestionTypeInterface>({
+    question: '',
+  })
 
   ngOnInit(): void {
     setTimeout(() => {

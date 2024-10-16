@@ -37,11 +37,6 @@ e.g,
 </h1>
 
 
-
-
-
-
-
 ```
 
 ## TOP 6 Mistakes in RxJS code

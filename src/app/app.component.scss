@@ -1,6 +1,12 @@
-.navbar-fix-place-holder {
+.navbar-fix-place-holder-orig {
   position: relative;
   height: var(--nav-height);
+  z-index: -1000;
+}
+
+.navbar-fix-place-holder {
+  position: relative;
+  height: var(--nav-height - 2rem);
   z-index: -1000;
 }
 
