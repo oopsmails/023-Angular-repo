@@ -1,6 +1,6 @@
 import { Component, effect, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { of, Subscription } from 'rxjs';
+import { delay, of, Subscription } from 'rxjs';
 
 
 @Component({
@@ -39,7 +39,9 @@ export class SignalFetchEffectComponent {
   }
 
   private fetch(id: string, from: Date, to: Date) {
-    return of(Math.random() * 100);
+    return of(Math.random() * 100).pipe(
+      delay(500)
+    );
   }
 }
 

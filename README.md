@@ -39,6 +39,13 @@ e.g,
 
 ```
 
+## Angular Routing
+
+https://github.com/monsterlessonsacademy/monsterlessonsacademy/tree/508-angular-routing
+
+src\app\app.routes.ts.good.example
+
+
 ## TOP 6 Mistakes in RxJS code
 
 - AngularTopRxjsMistakes
