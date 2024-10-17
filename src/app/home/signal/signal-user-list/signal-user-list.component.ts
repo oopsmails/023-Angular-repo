@@ -1,6 +1,6 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModifiedUser, User } from '../../../../shared/models/user';
+import { ModifiedUser, User } from '../../../shared/models/user';
 
 
 @Component({

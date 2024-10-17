@@ -1,6 +1,6 @@
 import { Component, computed, effect, model, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../../../shared/models/user';
+import { User } from '../../../shared/models/user';
 
 
 export interface QuestionTypeInterface {

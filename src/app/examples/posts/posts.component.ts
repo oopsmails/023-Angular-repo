@@ -12,8 +12,8 @@ import {
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
-import { User } from '../../../shared/models/user';
 import { SignalUserListComponent } from '../../home/signal/signal-user-list/signal-user-list.component';
+import { User } from '../../shared/models/user';
 import { PostsService } from './services/posts.service';
 import { PostInterface } from './types/post.interface';
 
