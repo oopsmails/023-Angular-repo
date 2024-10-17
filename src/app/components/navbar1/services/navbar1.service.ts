@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
@@ -13,7 +13,7 @@ import { NavBarModel } from '../models/navbar1.model';
 @Injectable({
   providedIn: 'root',
 })
-export class NavBar1Service implements OnDestroy {
+export class NavBar1Service {
   TIMER_REFRESH = 1 * 60 * 60 * 1000;
 
   private onDestroy$: Subject<boolean> = new Subject();
@@ -37,7 +37,7 @@ export class NavBar1Service implements OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
+  cleanUp(): void {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
   }

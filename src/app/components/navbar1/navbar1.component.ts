@@ -40,5 +40,6 @@ export class NavBar1Component implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
+    this.navBar1Service.cleanUp();
   }
 }
