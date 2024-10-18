@@ -42,7 +42,7 @@ export class UserSearchService {
       map(users => {
         // Filter by name if provided
         let filteredUsers = users;
-        if (searchConfig.userName) {
+        if (searchConfig.userName && searchConfig.userName.trim() !== '') {
           filteredUsers = filteredUsers.filter(user =>
             user.name?.toLowerCase().includes(searchConfig.userName!.toLowerCase())
           );
