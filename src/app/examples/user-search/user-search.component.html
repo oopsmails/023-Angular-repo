@@ -1,25 +1,50 @@
-<h1 class="text-3xl font-bold underline text-green-500">
-  Hello world!
-</h1>
-
 <h1>Users Search</h1>
-<form [formGroup]="searchConfigForm">
-  <label>User Name
-    <input formControlName="userName" placeholder="Type User Name" />
-  </label>
-  <label>Results Limit
-    <select formControlName="resultLimit">
-      <option [value]="1">1</option>
-      <option [value]="3">3</option>
-      <option [value]="5">5</option>
-    </select>
-  </label>
-</form>
-<p>
-  Found <b>{{ (users$ | async)?.length }}</b> Users
-</p>
-<ul>
-  @for (user of (users$ | async); track user.id) {
-  <li class="card">{{ user.name }}</li>
+
+<div class="div__section">
+  <h2>TOP 6 Mistakes in RxJS code</h2>
+  <p class="p__padding">Original Bad Code Example: src\app\examples\user-search\user-search.component-mistakes.ts.00</p>
+
+  <ul>
+    <li>1. Nested Subscriptions: fixed by using switchMap</li>
+    <li>2. Wrong usage of takeUntil for unsub because it is ONLY taking care of sub BEFORE this,
+      doesn't handle unsubscription downstream ... So, if using this takeUntil, then make sure it is the last
+      statement in the pipe(). Fix, see #3, basically, using async pipe and no need to use takeUntil.</li>
+    <li>3. Manual Subscriptions. Fix, using signal or async pipe.</li>
+    <li>4. Shold not execute Observable multiple times (in html, multiple (users$ | async)) because that will trigger
+      multiple calls because those are all subscribers. Then each change, next(), will trigger one call. Fix, using
+      (users$ | async; as users) or using shareReplay(1)
+    </li>
+    <li>5. Improper usage of distinctUntilChanged(). distinctUntilChanged is used for input and backspace, will trigger
+      multiple calls situation. distinctUntilChanged is only working with primitive types, like
+      string, boolean. But, here "valueChanges" is an object, with name and limit fields. Fix, if only tracking one
+      field of object, then can use distinctUntilKeyChanged('userName').</li>
+    <li>6. Side Effects in the wrong place. Store into localStorage in map operator. Fix, using tap() operator.</li>
+  </ul>
+
+  <p class="p__padding">Ref: <a href="https://www.youtube.com/watch?v=OhuRvfcw3Tw">youtube item</a></p>
+</div>
+
+<div class="div__section">
+  <form [formGroup]="searchConfigForm">
+    <label>User Name
+      <input formControlName="userName" placeholder="Type User Name" />
+    </label>
+    <label>Results Limit
+      <select formControlName="resultLimit">
+        <option [value]="1">1</option>
+        <option [value]="3">3</option>
+        <option [value]="5">5</option>
+      </select>
+    </label>
+  </form>
+  @if (users$ | async; as users) {
+  <p>
+    Found <b>{{ users?.length }}</b> Users
+  </p>
+  <ul>
+    @for (user of users; track user.id) {
+    <li class="card">{{ user.name }}</li>
+    }
+  </ul>
   }
-</ul>
+</div>

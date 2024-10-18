@@ -1,13 +1,13 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilKeyChanged, map, shareReplay, switchMap, tap } from 'rxjs';
-import { UserSearchService } from '../users.service';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { UsersService, User } from '../users.service';
 
 @Component({
   selector: 'app-user-search',
   standalone: true,
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule],
   template: `
   <h1>Users Search</h1>
   <form [formGroup]="searchConfigForm">
@@ -23,10 +23,10 @@ import { UserSearchService } from '../users.service';
     </label>
   </form>
   <p>
-    Found <b>{{ (users$ | async)?.length }}</b> Users
+    Found <b>{{ users.length }}</b> Users
   </p>
   <ul>
-    @for (user of (users$ | async); track user.id) {
+    @for (user of users; track user.id) {
       <li class="card">{{ user.name }}</li>
     }
   </ul>
@@ -40,21 +40,28 @@ export class UserSearchComponent {
 
   searchConfig$ = this.searchConfigForm.valueChanges.pipe(
     debounceTime(300),
-    distinctUntilKeyChanged('userName'),
+    distinctUntilChanged(),
     map((config) => {
       const trimmedConfig = {
         ...config,
         userName: config.userName?.trim() || '',
       };
+      localStorage.setItem('searchConfig', JSON.stringify(trimmedConfig));
       return trimmedConfig;
-    }),
-    tap((trimmedConfig) => localStorage.setItem('searchConfig', JSON.stringify(trimmedConfig)))
+    })
   );
 
-  usersService = inject(UserSearchService);
-  users$ = this.searchConfig$.pipe(
-    switchMap((searchConfig) => this.usersService.findUsers(searchConfig)),
-    shareReplay(1)
-  )
-
+  destroyRef = inject(DestroyRef);
+  usersService = inject(UsersService);
+  users: User[] = [];
+  
+  ngOnInit() {
+    this.searchConfig$
+      .pipe(takeUntilDestroyed(this.destroyRef)) <------------------
+      .subscribe((searchConfig) => {
+        this.usersService.findUsers(searchConfig).subscribe((users) => {
+          this.users = users;
+        });
+      });
+  }
 }
