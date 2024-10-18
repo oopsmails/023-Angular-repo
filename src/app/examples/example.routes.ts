@@ -4,6 +4,7 @@ import { SignalUserListParentComponent } from "../home/signal/signal-user-list/s
 import { ExampleComponent } from "./example.component";
 import { PageClickComponent } from "./page-click/page-click.component";
 import { PostsComponent } from "./posts/posts.component";
+import { TimerReplayComponent } from "./timer-replay/timer-replay.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
 
 const routes: Routes = [
@@ -20,6 +21,10 @@ const routes: Routes = [
     {
         path: 'posts',
         component: PostsComponent,
+    },
+    {
+        path: 'timer-replay',
+        component: TimerReplayComponent,
     },
     { path: '**', component: ExampleComponent }, // for testing, if /home/notfound
 ];

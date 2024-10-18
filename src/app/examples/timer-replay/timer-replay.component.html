@@ -1,0 +1,19 @@
+<h1>Timer Replay Page</h1>
+
+<div class="div__section">
+    <h2>Other Routes</h2>
+    <p><a routerLink="/hm/signal-user-list">/hm/signal-user-list</a></p>
+</div>
+<hr>
+
+<div class="div__section">
+    <h3>Random Items:</h3>
+
+    {{randomItemsData()}} - {{randomItemsData()?.length}}
+
+    <ul class="timer-replay__ul">
+        @for (item of (source$ | async); track item.id) {
+        <li>{{ item.name }}</li>
+        }
+    </ul>
+</div>
