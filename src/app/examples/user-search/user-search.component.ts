@@ -19,8 +19,8 @@ export class UserSearchComponent {
 
   searchConfig$ = this.searchConfigForm.valueChanges.pipe(
     debounceTime(300),
-    // distinctUntilKeyChanged('userName'),
-    distinctUntilChanged(
+    // distinctUntilKeyChanged('userName'), // NOT used, only response to userName changes
+    distinctUntilChanged( // Only trigger if form values change. Note: will NOT trigger if re-type same char after backspace, e.g, type 'cl', then backspace and type 'l' again, quick, within 300 of course
       (prev, curr) => prev?.userName === curr?.userName && prev?.resultLimit === curr?.resultLimit
     ),
     tap(config => console.log('tap 1, config: ', config)),
