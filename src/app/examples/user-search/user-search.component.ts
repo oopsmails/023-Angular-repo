@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilKeyChanged, map, shareReplay, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap, tap } from 'rxjs';
 import { UserSearchService } from '../../shared/services/user-search.service';
 
 @Component({
@@ -19,7 +19,11 @@ export class UserSearchComponent {
 
   searchConfig$ = this.searchConfigForm.valueChanges.pipe(
     debounceTime(300),
-    distinctUntilKeyChanged('userName'),
+    // distinctUntilKeyChanged('userName'),
+    distinctUntilChanged(
+      (prev, curr) => prev?.userName === curr?.userName && prev?.resultLimit === curr?.resultLimit
+    ),
+    tap(config => console.log('tap 1, config: ', config)),
     map((config) => {
       const trimmedConfig = {
         ...config,
@@ -27,12 +31,19 @@ export class UserSearchComponent {
       };
       return trimmedConfig;
     }),
-    tap((trimmedConfig) => localStorage.setItem('searchConfig', JSON.stringify(trimmedConfig)))
+    tap((trimmedConfig) => {
+      console.log('tap 2, trimmedConfig: ', trimmedConfig);
+      localStorage.setItem('searchConfig', JSON.stringify(trimmedConfig))
+    })
   );
 
   usersService = inject(UserSearchService);
   users$ = this.searchConfig$.pipe(
-    switchMap((searchConfig) => this.usersService.findUsers(searchConfig)),
+    startWith(this.searchConfigForm.value),
+    switchMap((searchConfig) => {
+      console.log('tap 3, calling usersService .... with searchConfig: ', searchConfig);
+      return this.usersService.findUsers(searchConfig);
+    }),
     shareReplay(1)
   )
 
